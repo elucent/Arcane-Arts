@@ -1,0 +1,6 @@
+{
+    "variants":{
+        "activated=off": {"model": "arcanearts:voidInfuserBlock"},
+        "activated=on": {"model": "arcanearts:voidInfuserBlock"}
+    }
+}

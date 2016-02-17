@@ -1,0 +1,16 @@
+[
+{
+  "modid": "arcaneArts",
+  "name": "Arcane Arts",
+  "description": "Explore the boundless power of the Arcane.",
+  "version": "0.1",
+  "mcversion": "1.8.9",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Elucent"],
+  "credits": "Me, for making this mod.",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]

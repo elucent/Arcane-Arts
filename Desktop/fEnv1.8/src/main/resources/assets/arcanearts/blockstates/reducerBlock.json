@@ -1,0 +1,6 @@
+{
+    "variants":{
+        "activated=off": {"model": "arcanearts:reducerBlock_0"},
+        "activated=on": {"model": "arcanearts:reducerBlock_1"}
+    }
+}
