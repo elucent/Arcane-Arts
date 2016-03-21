@@ -1,0 +1,6 @@
+{
+    "variants":{
+        "activated=off": {"model": "arcanearts:fireInfuserBlock"},
+        "activated=on": {"model": "arcanearts:fireInfuserBlock"}
+    }
+}

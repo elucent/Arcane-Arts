@@ -1,0 +1,11 @@
+{
+    "variants":{
+        "type=null": {"model": "arcanearts:magicRune_1"},
+        "type=solidity": {"model": "arcanearts:magicRune_1"},
+        "type=fluidity": {"model": "arcanearts:magicRune_2"},
+        "type=transformation": {"model": "arcanearts:magicRune_3"},
+        "type=force": {"model": "arcanearts:magicRune_4"},
+        "type=radiance": {"model": "arcanearts:magicRune_5"},
+        "type=emptiness": {"model": "arcanearts:magicRune_6"}
+    }
+}

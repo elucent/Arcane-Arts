@@ -1,0 +1,6 @@
+{
+    "variants":{
+        "activated=off": {"model": "arcanearts:earthInfuserBlock"},
+        "activated=on": {"model": "arcanearts:earthInfuserBlock"}
+    }
+}

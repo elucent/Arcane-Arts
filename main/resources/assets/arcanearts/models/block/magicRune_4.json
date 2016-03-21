@@ -1,0 +1,22 @@
+{
+  "textures": {
+    "rune": "arcanearts:blocks/forceRune",
+    "particle": "arcanearts:blocks/solidityRune",
+    "null": "arcanearts:blocks/nullFace"
+  },
+  "elements": [
+    {
+        "from": [0,0,0],
+        "to": [16,1,16],
+        "shade": false,
+        "faces": {
+            "west": {"uv": [0,0,16,16], "texture":"#null"},
+            "down": {"uv": [0,0,16,16], "texture":"#null"},
+            "east": {"uv": [0,0,16,16], "texture":"#null"},
+            "north": {"uv": [0,0,16,16], "texture":"#null"},
+            "south": {"uv": [0,0,16,16], "texture":"#null"},
+            "up": {"uv": [0,0,16,16], "texture":"#rune"}
+        }
+    }
+   ]
+}

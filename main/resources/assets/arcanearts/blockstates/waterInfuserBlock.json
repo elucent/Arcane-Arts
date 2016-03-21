@@ -1,0 +1,6 @@
+{
+    "variants":{
+        "activated=off": {"model": "arcanearts:waterInfuserBlock"},
+        "activated=on": {"model": "arcanearts:waterInfuserBlock"}
+    }
+}

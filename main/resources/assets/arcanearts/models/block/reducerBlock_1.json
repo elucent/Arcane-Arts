@@ -1,0 +1,23 @@
+{
+  "textures": {
+    "top": "arcanearts:blocks/incineratorOn",
+    "side": "arcanearts:blocks/incineratorSide",
+    "particle": "arcanearts:blocks/incineratorSide",
+    "bottom": "arcanearts:blocks/incineratorBottom"
+  },
+  "elements": [
+    {
+        "from": [0,0,0],
+        "to": [16,16,16],
+        "shade": true,
+        "faces": {
+            "west": {"uv": [16,0,0,16], "texture":"#side"},
+            "down": {"uv": [0,0,16,16], "texture":"#bottom"},
+            "east": {"uv": [0,0,16,16], "texture":"#side"},
+            "north": {"uv": [16,0,0,16], "texture":"#side"},
+            "south": {"uv": [0,0,16,16], "texture":"#side"},
+            "up": {"uv": [0,0,16,16], "texture":"#top"}
+        }
+    }
+   ]
+}
