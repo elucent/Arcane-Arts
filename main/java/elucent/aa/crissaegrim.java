@@ -80,40 +80,43 @@ public class crissaegrim extends ItemSword implements itemVariableResult {
 	
 	@Override
 	public boolean onEntitySwing(EntityLivingBase entity, ItemStack stack){
-		double txDir = entity.rotationYawHead;
-		double tyDir = -entity.rotationPitch;
-		double plookX = entity.getLookVec().xCoord;
-		double plookY = entity.getLookVec().yCoord;
-		double plookZ = entity.getLookVec().zCoord;
-		stack.damageItem(1, entity);
-		for (int j = 0; j < 64; j ++){
-			txDir = random.nextFloat()*2.0*Math.PI;
-			tyDir = random.nextFloat()*2.0*Math.PI;
-			double lookX = random.nextFloat()*Math.sin(txDir)*Math.cos(tyDir);
-			double lookY = random.nextFloat()*Math.sin(tyDir);
-			double lookZ = random.nextFloat()*Math.cos(txDir)*Math.cos(tyDir);
-			if ((lookX*plookX)+(lookY*plookY)+(lookZ*plookZ) > 0.25){
-				double targetX = entity.posX+entity.width/2.0 + 3.0*Math.sin(txDir)*Math.cos(tyDir);
-				double targetY = entity.posY+entity.getEyeHeight() + 3.0*Math.sin(tyDir);
-				double targetZ = entity.posZ+entity.width/2.0 + 3.0*Math.cos(txDir)*Math.cos(tyDir);
-				World world = entity.getEntityWorld();
-				List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.fromBounds(targetX, targetY, targetZ, targetX+1.0, targetY+1.0, targetZ+1.0));
-				for (int i = 0; i < entities.size(); i ++){
-					if (entities.get(i).getUniqueID() != entity.getUniqueID()){
-						entities.get(i).attackEntityFrom(DamageSource.generic, (float) getAttackDamage(stack));
+		if (stack.getTagCompound().getInteger("ticker") == 0){
+			stack.getTagCompound().setInteger("ticker",5);
+			double txDir = entity.rotationYawHead;
+			double tyDir = -entity.rotationPitch;
+			double plookX = entity.getLookVec().xCoord;
+			double plookY = entity.getLookVec().yCoord;
+			double plookZ = entity.getLookVec().zCoord;
+			stack.damageItem(1, entity);
+			for (int j = 0; j < 64; j ++){
+				txDir = random.nextFloat()*2.0*Math.PI;
+				tyDir = random.nextFloat()*2.0*Math.PI;
+				double lookX = random.nextFloat()*Math.sin(txDir)*Math.cos(tyDir);
+				double lookY = random.nextFloat()*Math.sin(tyDir);
+				double lookZ = random.nextFloat()*Math.cos(txDir)*Math.cos(tyDir);
+				if ((lookX*plookX)+(lookY*plookY)+(lookZ*plookZ) > 0.25){
+					double targetX = entity.posX+entity.width/2.0 + 3.0*Math.sin(txDir)*Math.cos(tyDir);
+					double targetY = entity.posY+entity.getEyeHeight() + 3.0*Math.sin(tyDir);
+					double targetZ = entity.posZ+entity.width/2.0 + 3.0*Math.cos(txDir)*Math.cos(tyDir);
+					World world = entity.getEntityWorld();
+					List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.fromBounds(targetX, targetY, targetZ, targetX+1.0, targetY+1.0, targetZ+1.0));
+					for (int i = 0; i < entities.size(); i ++){
+						if (entities.get(i).getUniqueID() != entity.getUniqueID()){
+							entities.get(i).attackEntityFrom(DamageSource.generic, (float) getAttackDamage(stack));
+						}
 					}
-				}
-				
-				double dx, dy, dz = 0;
-				double xDir = random.nextFloat()*2.0*Math.PI;
-				double yDir = random.nextFloat()*2.0*Math.PI;
-				dx = Math.sin(xDir)*Math.cos(yDir);
-				dy = Math.sin(yDir);
-				dz = Math.cos(xDir)*Math.cos(yDir);
-				
-				for (int i = 0; i < 9; i ++){
-					double coeff = 2.0*((((double)i)/9.0)-0.5);
-					world.spawnParticle(EnumParticleTypes.REDSTONE, targetX+coeff*dx, targetY+coeff*dy, targetZ+coeff*dz, 0, 1, 1, 0);
+					
+					double dx, dy, dz = 0;
+					double xDir = random.nextFloat()*2.0*Math.PI;
+					double yDir = random.nextFloat()*2.0*Math.PI;
+					dx = Math.sin(xDir)*Math.cos(yDir);
+					dy = Math.sin(yDir);
+					dz = Math.cos(xDir)*Math.cos(yDir);
+					
+					for (int i = 0; i < 9; i ++){
+						double coeff = 2.0*((((double)i)/9.0)-0.5);
+						world.spawnParticle(EnumParticleTypes.REDSTONE, targetX+coeff*dx, targetY+coeff*dy, targetZ+coeff*dz, 0, 1, 1, 0);
+					}
 				}
 			}
 		}
@@ -161,6 +164,9 @@ public class crissaegrim extends ItemSword implements itemVariableResult {
 				stack.getTagCompound().getTagList("AttributeModifiers", Constants.NBT.TAG_COMPOUND).appendTag(damageModTag);
 				stack.getTagCompound().setBoolean("inited",true);
 			}
+		}
+		if (stack.getTagCompound().getInteger("ticker") > 0){
+			stack.getTagCompound().setInteger("ticker",stack.getTagCompound().getInteger("ticker")-1);
 		}
 		if (player instanceof EntityPlayer){
 			if (((EntityPlayer)player).getItemInUse() != stack){

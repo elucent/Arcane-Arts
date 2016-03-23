@@ -64,7 +64,7 @@ public class aaElementRay extends Entity {
 				}
 			}
 			
-			if (getEntityWorld().checkBlockCollision(AxisAlignedBB.fromBounds(posX-0.1, posY-0.1, posZ-0.1, posX+0.1, posY+0.1, posZ+0.1))){
+			if (this.isEntityInsideOpaqueBlock()){
 				didStrike = true;
 			}
 			

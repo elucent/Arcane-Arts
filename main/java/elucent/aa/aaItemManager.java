@@ -10,6 +10,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class aaItemManager {
@@ -97,6 +99,8 @@ public class aaItemManager {
 		materialReceptiveMetal.setRepairItem(new ItemStack(itemMaterial,1,15));
 		materialRegenerativeMetal.setRepairItem(new ItemStack(regenerativeMetal,1,15));
 	}
+	
+	@SideOnly(Side.CLIENT)
 	public static void registerItemRenderers(){
 		ClientRegistry.bindTileEntitySpecialRenderer(arcaneFocusEntity.class, new arcaneFocusRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(fireInfuserEntity.class, new infuserRenderer());

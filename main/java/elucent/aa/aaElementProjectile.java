@@ -89,7 +89,7 @@ public class aaElementProjectile extends Entity {
 				}
 			}
 			AxisAlignedBB bounds = AxisAlignedBB.fromBounds(posX-size*0.125, posY-size*0.125, posZ-size*0.125, posX+size*0.125, posY+size*0.125, posZ+size*0.125);
-			if (this.getEntityWorld().checkBlockCollision(bounds)){
+			if (this.isEntityInsideOpaqueBlock()){
 				didStrike = true;
 			}
 			if (didStrike){

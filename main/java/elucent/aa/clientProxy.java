@@ -14,6 +14,7 @@ public class clientProxy extends commonProxy {
 	public void init(FMLInitializationEvent event){
 		super.init(event);
 		aaItemManager.registerItemRenderers();
+		aaEntityManager.registerEntityRenderers();
 	}
 	
 	public void postInit(FMLPostInitializationEvent event){

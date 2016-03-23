@@ -26,35 +26,35 @@ public class vesselRenderer extends TileEntitySpecialRenderer {
 	}
 	
 	public void addBlock(WorldRenderer wr, double x1, double y1, double z1, double x2, double y2, double z2, double tx1, double ty1, double tx2, double ty2){
-		wr.pos(x1,y1,z1).tex(tx1, ty1).normal(0, 0, -1).endVertex();
-		wr.pos(x2,y1,z1).tex(tx2, ty1).normal(0, 0, -1).endVertex();
-		wr.pos(x2,y2,z1).tex(tx2, ty2).normal(0, 0, -1).endVertex();
-		wr.pos(x1,y2,z1).tex(tx1, ty2).normal(0, 0, -1).endVertex();
+		wr.pos(x1,y1,z1).tex(tx1, ty1).normal(0, 0, -1.0f).endVertex();
+		wr.pos(x2,y1,z1).tex(tx2, ty1).normal(0, 0, -1.0f).endVertex();
+		wr.pos(x2,y2,z1).tex(tx2, ty2).normal(0, 0, -1.0f).endVertex();
+		wr.pos(x1,y2,z1).tex(tx1, ty2).normal(0, 0, -1.0f).endVertex();
 
-		wr.pos(x1,y1,z1).tex(tx1, ty1).normal(-1, 0, 0).endVertex();
-		wr.pos(x1,y1,z2).tex(tx2, ty1).normal(-1, 0, 0).endVertex();
-		wr.pos(x1,y2,z2).tex(tx2, ty2).normal(-1, 0, 0).endVertex();
-		wr.pos(x1,y2,z1).tex(tx1, ty2).normal(-1, 0, 0).endVertex();
+		wr.pos(x1,y1,z1).tex(tx1, ty1).normal(-1.0f, 0, 0).endVertex();
+		wr.pos(x1,y1,z2).tex(tx2, ty1).normal(-1.0f, 0, 0).endVertex();
+		wr.pos(x1,y2,z2).tex(tx2, ty2).normal(-1.0f, 0, 0).endVertex();
+		wr.pos(x1,y2,z1).tex(tx1, ty2).normal(-1.0f, 0, 0).endVertex();
 
-		wr.pos(x1,y1,z1).tex(tx1, ty1).normal(0, -1, 0).endVertex();
-		wr.pos(x2,y1,z1).tex(tx2, ty1).normal(0, -1, 0).endVertex();
-		wr.pos(x2,y1,z2).tex(tx2, ty2).normal(0, -1, 0).endVertex();
-		wr.pos(x1,y1,z2).tex(tx1, ty2).normal(0, -1, 0).endVertex();
+		wr.pos(x1,y1,z1).tex(tx1, ty1).normal(0, -1.0f, 0).endVertex();
+		wr.pos(x2,y1,z1).tex(tx2, ty1).normal(0, -1.0f, 0).endVertex();
+		wr.pos(x2,y1,z2).tex(tx2, ty2).normal(0, -1.0f, 0).endVertex();
+		wr.pos(x1,y1,z2).tex(tx1, ty2).normal(0, -1.0f, 0).endVertex();
 
-		wr.pos(x1,y1,z2).tex(tx2, ty1).normal(0, 0, 1).endVertex();
-		wr.pos(x2,y1,z2).tex(tx1, ty1).normal(0, 0, 1).endVertex();
-		wr.pos(x2,y2,z2).tex(tx1, ty2).normal(0, 0, 1).endVertex();
-		wr.pos(x1,y2,z2).tex(tx2, ty2).normal(0, 0, 1).endVertex();
+		wr.pos(x1,y1,z2).tex(tx2, ty1).normal(0, 0, 1.0f).endVertex();
+		wr.pos(x2,y1,z2).tex(tx1, ty1).normal(0, 0, 1.0f).endVertex();
+		wr.pos(x2,y2,z2).tex(tx1, ty2).normal(0, 0, 1.0f).endVertex();
+		wr.pos(x1,y2,z2).tex(tx2, ty2).normal(0, 0, 1.0f).endVertex();
 
-		wr.pos(x2,y1,z1).tex(tx2, ty1).normal(1, 0, 0).endVertex();
-		wr.pos(x2,y1,z2).tex(tx1, ty1).normal(1, 0, 0).endVertex();
-		wr.pos(x2,y2,z2).tex(tx1, ty2).normal(1, 0, 0).endVertex();
-		wr.pos(x2,y2,z1).tex(tx2, ty2).normal(1, 0, 0).endVertex();
+		wr.pos(x2,y1,z1).tex(tx2, ty1).normal(1.0f, 0, 0).endVertex();
+		wr.pos(x2,y1,z2).tex(tx1, ty1).normal(1.0f, 0, 0).endVertex();
+		wr.pos(x2,y2,z2).tex(tx1, ty2).normal(1.0f, 0, 0).endVertex();
+		wr.pos(x2,y2,z1).tex(tx2, ty2).normal(1.0f, 0, 0).endVertex();
 
-		wr.pos(x1,y2,z1).tex(tx2, ty1).normal(0, 1, 0).endVertex();
-		wr.pos(x2,y2,z1).tex(tx1, ty1).normal(0, 1, 0).endVertex();
-		wr.pos(x2,y2,z2).tex(tx1, ty2).normal(0, 1, 0).endVertex();
-		wr.pos(x1,y2,z2).tex(tx2, ty2).normal(0, 1, 0).endVertex();
+		wr.pos(x1,y2,z1).tex(tx2, ty1).normal(0, 1.0f, 0).endVertex();
+		wr.pos(x2,y2,z1).tex(tx1, ty1).normal(0, 1.0f, 0).endVertex();
+		wr.pos(x2,y2,z2).tex(tx1, ty2).normal(0, 1.0f, 0).endVertex();
+		wr.pos(x1,y2,z2).tex(tx2, ty2).normal(0, 1.0f, 0).endVertex();
 	}
 	
 	@Override
@@ -65,7 +65,9 @@ public class vesselRenderer extends TileEntitySpecialRenderer {
 			//GL11.glEnable(GL11.GL_LIGHTING);
 			this.bindTexture(tex);
 			GL11.glTranslated(x, y, z);
+			GL11.glDisable(GL11.GL_LIGHTING);
 			GL11.glEnable(GL11.GL_BLEND);
+			GL11.glBlendFunc(GL11.GL_SRC_ALPHA, GL11.GL_ONE_MINUS_SRC_ALPHA);
 			GL11.glDisable(GL11.GL_CULL_FACE);
 			GL11.glScaled(1.0/16.0, 1.0/16.0, 1.0/16.0);
 			WorldRenderer worldRenderer = Tessellator.getInstance().getWorldRenderer();
@@ -103,6 +105,7 @@ public class vesselRenderer extends TileEntitySpecialRenderer {
 			Tessellator.getInstance().draw();
 			GL11.glDisable(GL11.GL_BLEND);
 			GL11.glEnable(GL11.GL_CULL_FACE);
+			GL11.glEnable(GL11.GL_LIGHTING);
 			GL11.glPopMatrix();
 		}
 	}

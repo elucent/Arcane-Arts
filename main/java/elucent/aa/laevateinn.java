@@ -75,6 +75,7 @@ public class laevateinn extends ItemSword implements itemVariableResult {
 	@Override
 	public void onPlayerStoppedUsing(ItemStack stack, World world, EntityPlayer player, int timeLeft){
 		if (72000-timeLeft > 5){
+			//player.openGui(arcaneArts.instance, 1, world, (int)player.posX, (int)player.posY, (int)player.posZ);
 			stack.damageItem(6, player);
 			world.spawnEntityInWorld(new aaElementProjectile(world).init(player.posX+2.0*player.getLookVec().xCoord,player.posY+2.0*player.getLookVec().yCoord+player.getEyeHeight(),player.posZ+2.0*player.getLookVec().zCoord,player.getLookVec().xCoord*2.0,player.getLookVec().yCoord*2.0,player.getLookVec().zCoord*2.0,aaElementManager.elementFire,1.0,((72000-timeLeft)/20.0)*this.getAttackDamage(stack)*1.5,5,player));
 		}

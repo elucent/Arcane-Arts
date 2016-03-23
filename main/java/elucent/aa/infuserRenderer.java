@@ -60,11 +60,12 @@ public class infuserRenderer extends TileEntitySpecialRenderer {
 	@Override
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage) {
 		ResourceLocation tex = new ResourceLocation("arcanearts:textures/blocks/mechanism.png");
+		GL11.glPushMatrix();
+		GL11.glPushClientAttrib(0);
+		GL11.glDisable(GL11.GL_LIGHTING);
+		GL11.glEnable(GL11.GL_BLEND);
+		GL11.glDisable(GL11.GL_CULL_FACE);
 		if (te instanceof fireInfuserEntity){
-			GL11.glPushMatrix();
-			GL11.glDisable(GL11.GL_LIGHTING);
-			GL11.glEnable(GL11.GL_BLEND);
-			GL11.glDisable(GL11.GL_CULL_FACE);
 			this.bindTexture(tex);
 			GL11.glTranslated(x, y, z);
 			GL11.glScaled(1.0/16.0, 1.0/16.0, 1.0/16.0);
@@ -80,16 +81,8 @@ public class infuserRenderer extends TileEntitySpecialRenderer {
 			worldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
 			addBlock(worldRenderer, 5.0D,10.0D,5.0D,11.0D,16.0D,11.0D,0.0D,0.0D,0.375,0.375);
 			Tessellator.getInstance().draw();
-			GL11.glDisable(GL11.GL_BLEND);
-			GL11.glEnable(GL11.GL_CULL_FACE);
-			GL11.glEnable(GL11.GL_LIGHTING);
-			GL11.glPopMatrix();
 		}
 		if (te instanceof earthInfuserEntity){
-			GL11.glPushMatrix();
-			GL11.glDisable(GL11.GL_LIGHTING);
-			GL11.glEnable(GL11.GL_BLEND);
-			GL11.glDisable(GL11.GL_CULL_FACE);
 			this.bindTexture(tex);
 			GL11.glTranslated(x, y, z);
 			GL11.glScaled(1.0/16.0, 1.0/16.0, 1.0/16.0);
@@ -105,16 +98,8 @@ public class infuserRenderer extends TileEntitySpecialRenderer {
 			worldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
 			addBlock(worldRenderer, 5.0D,0.0D,5.0D,11.0D,6.0D,11.0D,0.0D,0.0D,0.375,0.375);
 			Tessellator.getInstance().draw();
-			GL11.glDisable(GL11.GL_BLEND);
-			GL11.glEnable(GL11.GL_CULL_FACE);
-			GL11.glEnable(GL11.GL_LIGHTING);
-			GL11.glPopMatrix();
 		}
 		if (te instanceof waterInfuserEntity){
-			GL11.glPushMatrix();
-			GL11.glDisable(GL11.GL_LIGHTING);
-			GL11.glEnable(GL11.GL_BLEND);
-			GL11.glDisable(GL11.GL_CULL_FACE);
 			this.bindTexture(tex);
 			GL11.glTranslated(x, y, z);
 			GL11.glScaled(1.0/16.0, 1.0/16.0, 1.0/16.0);
@@ -130,16 +115,8 @@ public class infuserRenderer extends TileEntitySpecialRenderer {
 			worldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
 			addBlock(worldRenderer, 5.0D,10.0D,5.0D,11.0D,16.0D,11.0D,0.0D,0.0D,0.375,0.375);
 			Tessellator.getInstance().draw();
-			GL11.glDisable(GL11.GL_BLEND);
-			GL11.glEnable(GL11.GL_CULL_FACE);
-			GL11.glEnable(GL11.GL_LIGHTING);
-			GL11.glPopMatrix();
 		}
 		if (te instanceof airInfuserEntity){
-			GL11.glPushMatrix();
-			GL11.glDisable(GL11.GL_LIGHTING);
-			GL11.glEnable(GL11.GL_BLEND);
-			GL11.glDisable(GL11.GL_CULL_FACE);
 			this.bindTexture(tex);
 			GL11.glTranslated(x, y, z);
 			GL11.glScaled(1.0/16.0, 1.0/16.0, 1.0/16.0);
@@ -155,16 +132,8 @@ public class infuserRenderer extends TileEntitySpecialRenderer {
 			worldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
 			addBlock(worldRenderer, 5.0D,5.0D,5.0D,11.0D,11.0D,11.0D,0.0D,0.0D,0.375,0.375);
 			Tessellator.getInstance().draw();
-			GL11.glDisable(GL11.GL_BLEND);
-			GL11.glEnable(GL11.GL_CULL_FACE);
-			GL11.glEnable(GL11.GL_LIGHTING);
-			GL11.glPopMatrix();
 		}
 		if (te instanceof lightInfuserEntity){
-			GL11.glPushMatrix();
-			GL11.glDisable(GL11.GL_LIGHTING);
-			GL11.glEnable(GL11.GL_BLEND);
-			GL11.glDisable(GL11.GL_CULL_FACE);
 			this.bindTexture(tex);
 			GL11.glTranslated(x, y, z);
 			GL11.glScaled(1.0/16.0, 1.0/16.0, 1.0/16.0);
@@ -180,16 +149,8 @@ public class infuserRenderer extends TileEntitySpecialRenderer {
 			worldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
 			addBlock(worldRenderer, 0.0D,5.0D,5.0D,6.0D,11.0D,11.0D,0.0D,0.0D,0.375,0.375);
 			Tessellator.getInstance().draw();
-			GL11.glDisable(GL11.GL_BLEND);
-			GL11.glEnable(GL11.GL_CULL_FACE);
-			GL11.glEnable(GL11.GL_LIGHTING);
-			GL11.glPopMatrix();
 		}
 		if (te instanceof voidInfuserEntity){
-			GL11.glPushMatrix();
-			GL11.glDisable(GL11.GL_LIGHTING);
-			GL11.glEnable(GL11.GL_BLEND);
-			GL11.glDisable(GL11.GL_CULL_FACE);
 			this.bindTexture(tex);
 			GL11.glTranslated(x, y, z);
 			GL11.glScaled(1.0/16.0, 1.0/16.0, 1.0/16.0);
@@ -205,10 +166,11 @@ public class infuserRenderer extends TileEntitySpecialRenderer {
 			worldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);
 			addBlock(worldRenderer, 5.0D,10.0D,0.0D,11.0D,16.0D,6.0D,0.0D,0.0D,0.375,0.375);
 			Tessellator.getInstance().draw();
-			GL11.glDisable(GL11.GL_BLEND);
-			GL11.glEnable(GL11.GL_CULL_FACE);
-			GL11.glEnable(GL11.GL_LIGHTING);
-			GL11.glPopMatrix();
 		}
+		GL11.glDisable(GL11.GL_BLEND);
+		GL11.glEnable(GL11.GL_CULL_FACE);
+		GL11.glEnable(GL11.GL_LIGHTING);
+		GL11.glPopMatrix();
+		GL11.glPopClientAttrib();
 	}
 }
