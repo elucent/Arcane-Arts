@@ -1,0 +1,8 @@
+{
+    "variants":{
+        "facing=east": {"model": "arcanearts:crystalGrinderBlock_e"},
+        "facing=west": {"model": "arcanearts:crystalGrinderBlock_w"},
+        "facing=south": {"model": "arcanearts:crystalGrinderBlock_s"},
+        "facing=north": {"model": "arcanearts:crystalGrinderBlock_n"}
+    }
+}

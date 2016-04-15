@@ -116,9 +116,9 @@ public class crucibleEntity extends TileEntity implements ITickable {
 					world.spawnEntityInWorld(new EntityItem(world, pos.getX()+0.5,pos.getY()+1,pos.getZ()+0.5, items.get(items.size()-1)));
 					items.remove(items.size()-1);
 				}
-			}
-			if (renderItems.size() > 0){
-				renderItems.remove(renderItems.size()-1);
+				else {
+					items.remove(items.size()-1);
+				}
 			}
 		}
 		else {
@@ -141,10 +141,11 @@ public class crucibleEntity extends TileEntity implements ITickable {
 					ItemStack newItem = new ItemStack(player.getHeldItem().getItem(),1,player.getHeldItem().getItemDamage());
 					newItem.setTagCompound(player.getHeldItem().getTagCompound());
 					items.add(newItem);
-					renderItems.add(newItem);
 					player.getHeldItem().stackSize --;
 				}
 			}
 		}
+		renderItems = items;
+		this.markDirty();
 	}
 }

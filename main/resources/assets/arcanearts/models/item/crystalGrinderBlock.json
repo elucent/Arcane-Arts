@@ -1,0 +1,30 @@
+{
+    "textures": {
+        "top": "arcanearts:blocks/crystalGrinderTop",
+        "front": "arcanearts:blocks/crystalGrinderFront",
+        "side": "arcanearts:blocks/machineBlockSide",
+        "particle": "arcanearts:blocks/crystalGrinderFront"
+    },
+  "elements": [
+    {
+        "from": [0,0,0],
+        "to": [16,16,16],
+        "shade": true,
+        "faces": {
+            "west": {"uv": [16,0,0,16], "texture":"#side"},
+            "down": {"uv": [0,0,16,16], "texture":"#side"},
+            "east": {"uv": [0,0,16,16], "texture":"#side"},
+            "north": {"uv": [16,0,0,16], "texture":"#front"},
+            "south": {"uv": [0,0,16,16], "texture":"#side"},
+            "up": {"uv": [0,0,16,16], "texture":"#top"}
+        }
+    }
+   ],
+  "display": {
+    "thirdperson": {
+        "rotation": [ 10, -45, 170 ],
+        "translation": [ 0, 1.5, -2.75 ],
+        "scale": [ 0.375, 0.375, 0.375 ]
+    }
+    }
+}

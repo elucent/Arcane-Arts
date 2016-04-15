@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer.EnumStatus;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -89,9 +90,11 @@ public class aaElementProjectile extends Entity {
 				}
 			}
 			AxisAlignedBB bounds = AxisAlignedBB.fromBounds(posX-size*0.125, posY-size*0.125, posZ-size*0.125, posX+size*0.125, posY+size*0.125, posZ+size*0.125);
-			if (this.isEntityInsideOpaqueBlock()){
+
+			if (this.getEntityWorld().getBlockState(new BlockPos(Math.floor(posX+velX*0.25),Math.floor(posY+velY*0.25),Math.floor(posZ+velZ*0.25))).getBlock().isOpaqueCube()){
 				didStrike = true;
 			}
+			
 			if (didStrike){
 				for (int j = 0; j < 10; j ++){
 					double dx, dy, dz = 0;

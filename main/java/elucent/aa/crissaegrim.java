@@ -81,13 +81,19 @@ public class crissaegrim extends ItemSword implements itemVariableResult {
 	@Override
 	public boolean onEntitySwing(EntityLivingBase entity, ItemStack stack){
 		if (stack.getTagCompound().getInteger("ticker") == 0){
-			stack.getTagCompound().setInteger("ticker",5);
+			stack.getTagCompound().setInteger("ticker",0);
 			double txDir = entity.rotationYawHead;
 			double tyDir = -entity.rotationPitch;
 			double plookX = entity.getLookVec().xCoord;
 			double plookY = entity.getLookVec().yCoord;
 			double plookZ = entity.getLookVec().zCoord;
 			stack.damageItem(1, entity);
+			List<EntityLivingBase> entities = entity.getEntityWorld().getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.fromBounds(entity.posX+4.0*plookX-2.0, entity.posY+4.0*plookY-2.0, entity.posZ+4.0*plookZ-2.0, entity.posX+3.0*plookX+2.0, entity.posY+3.0*plookY+2.0, entity.posZ+3.0*plookZ+2.0));
+			for (int i = 0; i < entities.size(); i ++){
+				if (entities.get(i).getUniqueID() != entity.getUniqueID()){
+					entities.get(i).attackEntityFrom(DamageSource.generic, (float) getAttackDamage(stack));
+				}
+			}
 			for (int j = 0; j < 64; j ++){
 				txDir = random.nextFloat()*2.0*Math.PI;
 				tyDir = random.nextFloat()*2.0*Math.PI;
@@ -99,12 +105,6 @@ public class crissaegrim extends ItemSword implements itemVariableResult {
 					double targetY = entity.posY+entity.getEyeHeight() + 3.0*Math.sin(tyDir);
 					double targetZ = entity.posZ+entity.width/2.0 + 3.0*Math.cos(txDir)*Math.cos(tyDir);
 					World world = entity.getEntityWorld();
-					List<EntityLivingBase> entities = world.getEntitiesWithinAABB(EntityLivingBase.class, AxisAlignedBB.fromBounds(targetX, targetY, targetZ, targetX+1.0, targetY+1.0, targetZ+1.0));
-					for (int i = 0; i < entities.size(); i ++){
-						if (entities.get(i).getUniqueID() != entity.getUniqueID()){
-							entities.get(i).attackEntityFrom(DamageSource.generic, (float) getAttackDamage(stack));
-						}
-					}
 					
 					double dx, dy, dz = 0;
 					double xDir = random.nextFloat()*2.0*Math.PI;
@@ -113,7 +113,7 @@ public class crissaegrim extends ItemSword implements itemVariableResult {
 					dy = Math.sin(yDir);
 					dz = Math.cos(xDir)*Math.cos(yDir);
 					
-					for (int i = 0; i < 9; i ++){
+					for (int i = 0; i < 4; i ++){
 						double coeff = 2.0*((((double)i)/9.0)-0.5);
 						world.spawnParticle(EnumParticleTypes.REDSTONE, targetX+coeff*dx, targetY+coeff*dy, targetZ+coeff*dz, 0, 1, 1, 0);
 					}

@@ -35,6 +35,7 @@ public class arcaneFocusEntity extends TileEntity implements ITickable {
 			heldItem = player.getHeldItem();
 			player.setCurrentItemOrArmor(0, null);
 		}
+		this.markDirty();
 		return true;
 	}
 	

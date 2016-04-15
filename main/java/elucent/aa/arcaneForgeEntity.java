@@ -41,6 +41,7 @@ public class arcaneForgeEntity extends TileEntity implements ITickable {
 	public ArrayList<ItemStack> renderItems = new ArrayList<ItemStack>();
 	public aaComplexInfusionRecipe recipe = null;
 	public int progress = 0;
+	boolean updateRecipe = false;
 	int ticker = 0;
 	Random random = new Random();
 	float itemRotation = 0;
@@ -122,75 +123,62 @@ public class arcaneForgeEntity extends TileEntity implements ITickable {
 	}
 
 	public void activate(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
-		boolean updateRecipe = false;
 		if (player.getHeldItem() == null){
-			updateRecipe = true;
-			if (items.size() > 0){
+			if (items.size() > 0){	
 				if (world.isRemote == false){
 					world.spawnEntityInWorld(new EntityItem(world, pos.getX()+0.5,pos.getY()+1,pos.getZ()+0.5, items.get(items.size()-1)));
-				}	
-				items.remove(items.size()-1);
-			}
-			if (renderItems.size() > 0){
-				renderItems.remove(renderItems.size()-1);
+					items.remove(items.size()-1);
+				}
+				else {
+					items.remove(items.size()-1);
+				}
 			}
 		}
-		else if (player.getHeldItem() != null){
+		else {
+			boolean doCraft = false;
+			ItemStack matterItem = null;
 			if (player.getHeldItem().getItem() == aaItemManager.forgeHammer){
-				if (recipe != null){
-					progress --;
-					for (int i = 0; i < 4; i ++){
-						getWorld().spawnParticle(EnumParticleTypes.CRIT, getPos().getX()+random.nextFloat()*0.5+0.25, getPos().getY()+1.0, getPos().getZ()+random.nextFloat()*0.5+0.25, random.nextFloat()*0.1, random.nextFloat()*0.1, random.nextFloat()*0.1, 0);
+				System.out.println("Items: " + items.size());
+				System.out.println("Testing " + aaElementManager.complexInfusions.size() + " complex infusion recipes.");
+				for (int i = 0; i < aaElementManager.complexInfusions.size(); i ++){
+					doCraft = aaElementManager.complexInfusions.get(i).doesMatch(items,world);
+					System.out.println("Items match?: " + doCraft);
+					for (int j = 0; j < items.size(); j ++){
+						if (items.get(j).getItem() == aaItemManager.compoundMatter){
+							matterItem = items.get(j);
+						}
 					}
-					if (progress == 0){
-						double correctness = 0.0;
-						for (int i = 0; i < items.size(); i ++){
-							if (items.get(i).getItem() == aaItemManager.compoundMatter){
-								compoundMatter comp = (compoundMatter)items.get(i).getItem();
-								correctness = recipe.getCorrectness(comp.getElementValue(items.get(i), "fire"),
-													  				comp.getElementValue(items.get(i), "earth"),
-													  				comp.getElementValue(items.get(i), "water"),
-													  				comp.getElementValue(items.get(i), "air"),
-													  				comp.getElementValue(items.get(i), "light"),
-													  				comp.getElementValue(items.get(i), "void"),
-													  				getWorld());
-							}
+					double correctness = aaElementManager.complexInfusions.get(i).getCorrectness(
+						((compoundMatter)matterItem.getItem()).getElementValue(matterItem, "fire"),
+						((compoundMatter)matterItem.getItem()).getElementValue(matterItem, "earth"),
+						((compoundMatter)matterItem.getItem()).getElementValue(matterItem, "water"),
+						((compoundMatter)matterItem.getItem()).getElementValue(matterItem, "air"),
+						((compoundMatter)matterItem.getItem()).getElementValue(matterItem, "light"),
+						((compoundMatter)matterItem.getItem()).getElementValue(matterItem, "void"), world);
+					System.out.println("Correctness: " + correctness);
+					if (doCraft && correctness >= 0.7){
+						if (world.isRemote == false){
+							ItemStack result = aaElementManager.complexInfusions.get(i).output;
+							result = ((itemVariableResult)aaElementManager.complexInfusions.get(i).output.getItem()).initFromCorrectness(correctness);
+							world.spawnEntityInWorld(new EntityItem(world, getPos().getX()+0.5,getPos().getY()+1.5, getPos().getZ()+0.5, result));
 						}
-						if (getWorld().isRemote == false){
-							world.spawnEntityInWorld(new EntityItem(world, pos.getX()+0.5,pos.getY()+1,pos.getZ()+0.5, ((itemVariableResult)recipe.output.getItem()).initFromCorrectness(correctness)));
-						}
-						world.spawnParticle(EnumParticleTypes.EXPLOSION_NORMAL, getPos().getX()+0.5, getPos().getY()+0.5, getPos().getZ()+0.5, 0, 0, 0, 0);
+						items = new ArrayList<ItemStack>();
 						items.clear();
-						updateRecipe = true;
+						renderItems = new ArrayList<ItemStack>();
 						renderItems.clear();
 					}
 				}
 			}
 			else {
-				updateRecipe = true;
-				player.getHeldItem().stackSize --;
-				boolean doCraft = false;
-				/*
-				items = new ArrayList<ItemStack>();
-				renderItems = new ArrayList<ItemStack>();*/
-				if (!doCraft){
-					if (items.size() < 14){
-						ItemStack newItem = new ItemStack(player.getHeldItem().getItem(),1,player.getHeldItem().getItemDamage());
-						newItem.setTagCompound(player.getHeldItem().getTagCompound());
-						items.add(newItem);
-						renderItems.add(newItem);
-					}
+				if (items.size() < 10){
+					ItemStack newItem = new ItemStack(player.getHeldItem().getItem(),1,player.getHeldItem().getItemDamage());
+					newItem.setTagCompound(player.getHeldItem().getTagCompound());
+					items.add(newItem);
+					player.getHeldItem().stackSize --;
 				}
 			}
 		}
-		if (updateRecipe){
-			recipe = null;
-			for (int i = 0; i < aaElementManager.complexInfusions.size(); i ++){
-				if (aaElementManager.complexInfusions.get(i).doesMatch(items, world)){
-					recipe = aaElementManager.complexInfusions.get(i);
-					progress = (int)Math.floor((recipe.fireReq + recipe.earthReq + recipe.waterReq + recipe.airReq + recipe.lightReq + recipe.voidReq)*0.15);
-				}
-			}
-		}
+		renderItems = items;
+		this.markDirty();
 	}
 }

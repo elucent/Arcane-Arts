@@ -192,5 +192,6 @@ public class voidInfuserEntity extends TileEntity implements ITickable {
 				}
 			}
 		}
+		this.markDirty();
 	}
 }

@@ -6,6 +6,7 @@ import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.item.Item.ToolMaterial;
+import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.common.util.EnumHelper;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
@@ -15,8 +16,8 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.minecraftforge.oredict.OreDictionary;
 
 public class aaItemManager {
-	public static Item regenerativeMetal, swordRegenerative, shovelRegenerative, pickaxeRegenerative, hoeRegenerative, axeRegenerative, scarletStone, starfireGun, beamPistol, invigoratingUrn, invigoratingUrn2, vial, dainsleif, laevateinn, crissaegrim, ichor, itemMagicChalk, compoundMatter, itemAlchemyFlask, itemMaterial, debugWand, swordReceptive, pickaxeReceptive, axeReceptive, shovelReceptive, hoeReceptive, itemLuminousShield, forgeHammer, mjolnir;
-	public static Block advancedFormatorBlock, simpleFormatorBlock, containerDrainBlock, magicRune, crucibleBlock, earthInfuserBlock, waterInfuserBlock, airInfuserBlock, lightInfuserBlock, voidInfuserBlock, arcaneFocus, reducerBlock, diffuserBlock, fireInfuserBlock, vesselBlock, arcaneForgeBlock;
+	public static Item journal, helmetRegenerative, chestplateRegenerative, leggingsRegenerative, bootsRegenerative, helmetReceptive, chestplateReceptive, leggingsReceptive, bootsReceptive, regenerativeMetal, swordRegenerative, shovelRegenerative, pickaxeRegenerative, hoeRegenerative, axeRegenerative, scarletStone, starfireGun, beamPistol, invigoratingUrn, invigoratingUrn2, vial, dainsleif, laevateinn, crissaegrim, ichor, itemMagicChalk, compoundMatter, itemAlchemyFlask, itemMaterial, debugWand, swordReceptive, pickaxeReceptive, axeReceptive, shovelReceptive, hoeReceptive, itemLuminousShield, forgeHammer, mjolnir, tinkerWrench;
+	public static Block rayLensBlock, elementActivatorBlock, crystalSmelteryBlock, crystalGrinderBlock, rayEmitterBlock, energyCellBlock, advancedFormatorBlock, simpleFormatorBlock, containerDrainBlock, magicRune, crucibleBlock, earthInfuserBlock, waterInfuserBlock, airInfuserBlock, lightInfuserBlock, voidInfuserBlock, arcaneFocus, reducerBlock, diffuserBlock, fireInfuserBlock, vesselBlock, arcaneForgeBlock;
 	
 	public static ToolMaterial materialReceptiveMetal = EnumHelper.addToolMaterial("receptiveMetal", 3, 1063, 8.0f, 3, 30);
 	public static ToolMaterial materialMjolnir = EnumHelper.addToolMaterial("mjolnir", 4, 861, 13.0f, 9, 20);
@@ -25,14 +26,20 @@ public class aaItemManager {
 	public static ToolMaterial materialDainsleif = EnumHelper.addToolMaterial("dainsleif", 4, 662, 10.0f, 6, 10);
 	public static ToolMaterial materialScarlet = EnumHelper.addToolMaterial("scarlet", 0, 64, 0, 0, 0);
 	public static ToolMaterial materialRegenerativeMetal = EnumHelper.addToolMaterial("regenerativeMetal",4, 194, 10.0f, 4, 20);
-	
+	public static ArmorMaterial armorReceptiveMetal = EnumHelper.addArmorMaterial("armorReceptive", "arcanearts:armorReceptive", 24, new int[] {3,7,5,2}, 30);
+	public static ArmorMaterial armorRegenerativeMetal = EnumHelper.addArmorMaterial("armorRegenerative", "arcanearts:armorRegenerative", 8, new int[] {3,8,6,3}, 20);
 	
 	public static void initOre(){
 		OreDictionary.registerOre("dustRedstone", scarletStone);
 		OreDictionary.registerOre("dustGlowstone", scarletStone);
 		OreDictionary.registerOre("gemQuartz", scarletStone);
 		OreDictionary.registerOre("gemLapis", scarletStone);
+		OreDictionary.registerOre("dustIron", new ItemStack(itemMaterial,1,25));
+		OreDictionary.registerOre("dustGold", new ItemStack(itemMaterial,1,26));
 		OreDictionary.registerOre("slimeball", scarletStone);
+		OreDictionary.registerOre("dustSugar", Items.sugar);
+		OreDictionary.registerOre("coal", Items.coal);
+		OreDictionary.registerOre("coal", new ItemStack(Items.coal,1,1));
 	}
 	
 	public static void createItems(){
@@ -54,17 +61,27 @@ public class aaItemManager {
 		GameRegistry.registerItem(compoundMatter = new compoundMatter());
 		GameRegistry.registerItem(debugWand = new basicItem("debugWand",arcaneArts.tab),"debugWand");
 		GameRegistry.registerItem(forgeHammer = new basicItem("forgeHammer",arcaneArts.tab).setMaxStackSize(1),"forgeHammer");
+		GameRegistry.registerItem(tinkerWrench = new tinkerWrench(), "tinkerWrench");
 		GameRegistry.registerItem(itemMagicChalk = new itemMagicChalk(),"itemMagicChalk");
 		GameRegistry.registerItem(itemAlchemyFlask = new itemAlchemyFlask(),"itemAlchemyFlask");
 		GameRegistry.registerItem(swordReceptive = new swordReceptive());
 		GameRegistry.registerItem(pickaxeReceptive = new pickaxeReceptive());
 		GameRegistry.registerItem(axeReceptive = new axeReceptive());
 		GameRegistry.registerItem(shovelReceptive = new shovelReceptive());
+		GameRegistry.registerItem(helmetReceptive = new itemArmorReceptive("helmetReceptive",armorReceptiveMetal,1,0));
+		GameRegistry.registerItem(chestplateReceptive = new itemArmorReceptive("chestplateReceptive",armorReceptiveMetal,1,1));
+		GameRegistry.registerItem(leggingsReceptive = new itemArmorReceptive("leggingsReceptive",armorReceptiveMetal,2,2));
+		GameRegistry.registerItem(bootsReceptive = new itemArmorReceptive("bootsReceptive",armorReceptiveMetal,1,3));
+		GameRegistry.registerItem(helmetRegenerative = new itemArmorRegenerative("helmetRegenerative",armorRegenerativeMetal,1,0));
+		GameRegistry.registerItem(chestplateRegenerative = new itemArmorRegenerative("chestplateRegenerative",armorRegenerativeMetal,1,1));
+		GameRegistry.registerItem(leggingsRegenerative = new itemArmorRegenerative("leggingsRegenerative",armorRegenerativeMetal,2,2));
+		GameRegistry.registerItem(bootsRegenerative = new itemArmorRegenerative("bootsRegenerative",armorRegenerativeMetal,1,3));
 		GameRegistry.registerItem(hoeReceptive = new hoeReceptive());
 		GameRegistry.registerItem(itemLuminousShield = new itemLuminousShield());
 		GameRegistry.registerItem(mjolnir = new mjolnir());
 		GameRegistry.registerItem(ichor = new ichor());
 		GameRegistry.registerItem(crissaegrim = new crissaegrim());
+		GameRegistry.registerItem(journal = new journal());
 		GameRegistry.registerBlock(magicRune = new magicRune(),"magicRune");
 		GameRegistry.registerBlock(simpleFormatorBlock = new simpleFormatorBlock());
 		GameRegistry.registerBlock(advancedFormatorBlock = new advancedFormatorBlock());
@@ -81,6 +98,12 @@ public class aaItemManager {
 		GameRegistry.registerBlock(crucibleBlock = new crucibleBlock(), "crucibleBlock");
 		GameRegistry.registerBlock(arcaneForgeBlock = new arcaneForgeBlock(), "arcaneForgeBlock");
 		GameRegistry.registerBlock(containerDrainBlock = new containerDrainBlock(), "containerDrainBlock");
+		GameRegistry.registerBlock(energyCellBlock = new energyCellBlock(),"energyCellBlock");
+		GameRegistry.registerBlock(rayEmitterBlock = new rayEmitterBlock(),"rayEmitterBlock");
+		GameRegistry.registerBlock(crystalSmelteryBlock = new crystalSmelteryBlock(),"crystalSmelteryBlock");
+		GameRegistry.registerBlock(crystalGrinderBlock = new crystalGrinderBlock(),"crystalGrinderBlock");
+		GameRegistry.registerBlock(elementActivatorBlock = new elementActivatorBlock(),"elementActivatorBlock");
+		GameRegistry.registerBlock(rayLensBlock = new rayLensBlock(),"rayLensBlock");
 		GameRegistry.registerTileEntity(arcaneFocusEntity.class, "arcaneFocusEntity");
 		GameRegistry.registerTileEntity(reducerEntity.class, "reducerEntity");
 		GameRegistry.registerTileEntity(diffuserEntity.class, "diffuserEntity");
@@ -96,6 +119,12 @@ public class aaItemManager {
 		GameRegistry.registerTileEntity(containerDrainEntity.class, "containerDrainEntity");
 		GameRegistry.registerTileEntity(simpleFormatorEntity.class, "simpleFormatorEntity");
 		GameRegistry.registerTileEntity(advancedFormatorEntity.class, "advancedFormatorEntity");
+		GameRegistry.registerTileEntity(energyCellEntity.class, "energyCellEntity");
+		GameRegistry.registerTileEntity(rayEmitterEntity.class, "rayEmitterEntity");
+		GameRegistry.registerTileEntity(crystalSmelteryEntity.class, "crystalSmelteryEntity");
+		GameRegistry.registerTileEntity(crystalGrinderEntity.class, "crystalGrinderEntity");
+		GameRegistry.registerTileEntity(elementActivatorEntity.class, "elementActivatorEntity");
+		GameRegistry.registerTileEntity(rayLensEntity.class, "rayLensEntity");
 		materialReceptiveMetal.setRepairItem(new ItemStack(itemMaterial,1,15));
 		materialRegenerativeMetal.setRepairItem(new ItemStack(regenerativeMetal,1,15));
 	}
@@ -113,6 +142,9 @@ public class aaItemManager {
 		ClientRegistry.bindTileEntitySpecialRenderer(crucibleEntity.class, new crucibleRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(arcaneForgeEntity.class, new arcaneForgeRenderer());
 		ClientRegistry.bindTileEntitySpecialRenderer(containerDrainEntity.class, new containerDrainRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(energyCellEntity.class, new energyCellRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(rayEmitterEntity.class, new rayEmitterRenderer());
+		ClientRegistry.bindTileEntitySpecialRenderer(rayLensEntity.class, new rayLensRenderer());
 		((vial)vial).initModel();
 		((crissaegrim)crissaegrim).initModel();
 		((dainsleif)dainsleif).initModel();
@@ -120,6 +152,7 @@ public class aaItemManager {
 		((compoundMatter)compoundMatter).initModel();
 		((basicItem)debugWand).initModel("debugWand");
 		((basicItem)forgeHammer).initModel("forgeHammer");
+		((tinkerWrench)tinkerWrench).initModel();
 		((itemMagicChalk)itemMagicChalk).initModel("itemMagicChalk");
 		((magicRune)magicRune).initModel();
 		((arcaneFocusBlock)arcaneFocus).initModel();
@@ -158,5 +191,20 @@ public class aaItemManager {
 		((axeRegenerative)axeRegenerative).initModel();
 		((shovelRegenerative)shovelRegenerative).initModel();
 		((hoeRegenerative)hoeRegenerative).initModel();
+		((itemArmorReceptive)helmetReceptive).initModel();
+		((itemArmorReceptive)chestplateReceptive).initModel();
+		((itemArmorReceptive)leggingsReceptive).initModel();
+		((itemArmorReceptive)bootsReceptive).initModel();
+		((itemArmorRegenerative)helmetRegenerative).initModel();
+		((itemArmorRegenerative)chestplateRegenerative).initModel();
+		((itemArmorRegenerative)leggingsRegenerative).initModel();
+		((itemArmorRegenerative)bootsRegenerative).initModel();
+		((energyCellBlock)energyCellBlock).initModel();
+		((rayEmitterBlock)rayEmitterBlock).initModel();
+		((crystalSmelteryBlock)crystalSmelteryBlock).initModel();
+		((crystalGrinderBlock)crystalGrinderBlock).initModel();
+		((elementActivatorBlock)elementActivatorBlock).initModel();
+		((journal)journal).initModel();
+		((rayLensBlock)rayLensBlock).initModel();
 	}
 }

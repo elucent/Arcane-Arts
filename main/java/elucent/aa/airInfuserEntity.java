@@ -190,5 +190,6 @@ public class airInfuserEntity extends TileEntity implements ITickable {
 				}
 			}
 		}
+		markDirty();
 	}
 }

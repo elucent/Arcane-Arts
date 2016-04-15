@@ -1,0 +1,8 @@
+{
+    "variants":{
+        "facing=east": {"model": "arcanearts:crystalSmelteryBlock_e"},
+        "facing=west": {"model": "arcanearts:crystalSmelteryBlock_w"},
+        "facing=south": {"model": "arcanearts:crystalSmelteryBlock_s"},
+        "facing=north": {"model": "arcanearts:crystalSmelteryBlock_n"}
+    }
+}

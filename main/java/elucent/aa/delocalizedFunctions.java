@@ -134,4 +134,18 @@ public class delocalizedFunctions {
 				(int)(f*fireColor.getZ()+e*earthColor.getZ()+w*waterColor.getZ()+a*airColor.getZ()+l*lightColor.getZ()+v*voidColor.getZ()));
 		return aaToolKit.intColor(result);
 	}
+	
+	public static Vec3i mixElementsVec(double f, double e, double w, double a, double l, double v){
+		Vec3i fireColor = aaElementManager.elementFire.vColor;
+		Vec3i earthColor = aaElementManager.elementEarth.vColor;
+		Vec3i waterColor = aaElementManager.elementWater.vColor;
+		Vec3i airColor = aaElementManager.elementAir.vColor;
+		Vec3i lightColor = aaElementManager.elementLight.vColor;
+		Vec3i voidColor = aaElementManager.elementVoid.vColor;
+		
+		Vec3i result = new Vec3i((int)(f*fireColor.getX()+e*earthColor.getX()+w*waterColor.getX()+a*airColor.getX()+l*lightColor.getX()+v*voidColor.getX()),
+				(int)(f*fireColor.getY()+e*earthColor.getY()+w*waterColor.getY()+a*airColor.getY()+l*lightColor.getY()+v*voidColor.getY()),
+				(int)(f*fireColor.getZ()+e*earthColor.getZ()+w*waterColor.getZ()+a*airColor.getZ()+l*lightColor.getZ()+v*voidColor.getZ()));
+		return result;
+	}
 }

@@ -76,9 +76,13 @@ public class starfireGun extends Item implements itemVariableResult {
 			stack.getTagCompound().setBoolean("inited", false);
 			stack.getTagCompound().setDouble("correctness", 1.00);
 			stack.getTagCompound().setDouble("depletion", 0);
+			stack.getTagCompound().setDouble("cooldown", 0);
 			stack.getTagCompound().setInteger("ticker", 0);
 		}
 		else {
+			if (stack.getTagCompound().getDouble("cooldown") > 0){
+				stack.getTagCompound().setDouble("cooldown",stack.getTagCompound().getDouble("cooldown")-1.0);
+			}
 			if (stack.getTagCompound().getDouble("depletion") >= 455){
 				stack.stackSize = 0;
 			}
@@ -119,8 +123,11 @@ public class starfireGun extends Item implements itemVariableResult {
 		super.onItemRightClick(stack, world, player);
 		if (!player.isSneaking()){
 			if (stack.hasTagCompound()){
-				world.spawnEntityInWorld(new aaElementProjectile(world).init(player.posX+player.width/2.0+player.getLookVec().xCoord*2.0,player.posY+1.4+player.getLookVec().yCoord*2.0,player.posZ+player.width/2.0+player.getLookVec().zCoord*2.0,player.getLookVec().xCoord*3.0,player.getLookVec().yCoord*3.0,player.getLookVec().zCoord*3.0,aaElementManager.elementRaw,0.5,6.0*getCorrectness(stack)*getCorrectness(stack),3,player));
-				stack.getTagCompound().setDouble("depletion",stack.getTagCompound().getDouble("depletion")+1.0/getCorrectness(stack));
+				if (stack.getTagCompound().getDouble("cooldown") <= 0){
+					stack.getTagCompound().setDouble("cooldown", 10.0/this.getCorrectness(stack));
+					world.spawnEntityInWorld(new aaElementProjectile(world).init(player.posX+player.width/2.0+player.getLookVec().xCoord*2.0,player.posY+1.4+player.getLookVec().yCoord*2.0,player.posZ+player.width/2.0+player.getLookVec().zCoord*2.0,player.getLookVec().xCoord*3.0,player.getLookVec().yCoord*3.0,player.getLookVec().zCoord*3.0,aaElementManager.elementRaw,0.5,6.0*getCorrectness(stack)*getCorrectness(stack),3,player));
+					stack.getTagCompound().setDouble("depletion",stack.getTagCompound().getDouble("depletion")+1.0/getCorrectness(stack));
+				}
 			}
 		}
 		return stack;

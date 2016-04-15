@@ -10,6 +10,8 @@ import net.minecraft.item.ItemArmor.ArmorMaterial;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ChatComponentText;
 import net.minecraft.util.DamageSource;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.event.entity.living.LivingHurtEvent;
 import net.minecraftforge.event.entity.player.PlayerUseItemEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -25,6 +27,12 @@ public class aaEventManager {
 				}
 			}
 		}
+	}
+	
+	@SubscribeEvent
+	public void onTextureStitch(TextureStitchEvent event){
+		ResourceLocation magicParticleRL = new ResourceLocation("arcanearts:entity/magicParticle");
+		event.map.registerSprite(magicParticleRL);
 	}
 	
 	@SubscribeEvent

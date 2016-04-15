@@ -136,5 +136,6 @@ public class containerDrainEntity extends TileEntity implements ITickable {
 				}
 			}
 		}
+		this.markDirty();
 	}
 }

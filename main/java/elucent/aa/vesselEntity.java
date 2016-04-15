@@ -133,6 +133,7 @@ public class vesselEntity extends TileEntity implements tileElementContainer{
 				}
 			}
 		}
+		this.markDirty();
 	}
 
 	@Override

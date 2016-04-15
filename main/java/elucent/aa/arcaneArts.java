@@ -78,6 +78,7 @@ public class arcaneArts {
 	@EventHandler
 	public void init(FMLInitializationEvent e) {
 	    this.proxy.init(e);
+	    aaItemManager.initOre();
 	}
 
 	@EventHandler

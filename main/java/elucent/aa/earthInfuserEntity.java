@@ -192,5 +192,6 @@ public class earthInfuserEntity extends TileEntity implements ITickable {
 				}
 			}
 		}
+		this.markDirty();
 	}
 }

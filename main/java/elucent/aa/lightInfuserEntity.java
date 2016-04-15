@@ -192,5 +192,6 @@ public class lightInfuserEntity extends TileEntity implements ITickable {
 				}
 			}
 		}
+		this.markDirty();
 	}
 }

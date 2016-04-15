@@ -192,5 +192,6 @@ public class waterInfuserEntity extends TileEntity implements ITickable {
 				}
 			}
 		}
+		this.markDirty();
 	}
 }

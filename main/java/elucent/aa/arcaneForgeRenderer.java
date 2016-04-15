@@ -20,9 +20,9 @@ public class arcaneForgeRenderer extends TileEntitySpecialRenderer {
 	public void renderTileEntityAt(TileEntity te, double x, double y, double z, float partialTicks, int destroyStage) {
 		if (te instanceof arcaneForgeEntity){
 			arcaneForgeEntity ate = (arcaneForgeEntity)te;
-			for (int i = 0; i < ate.renderItems.size(); i ++){
+			for (int i = 0; i < ate.items.size(); i ++){
 				GL11.glPushMatrix();
-				EntityItem item = new EntityItem(Minecraft.getMinecraft().theWorld,x,y,z,ate.renderItems.get(i));
+				EntityItem item = new EntityItem(Minecraft.getMinecraft().theWorld,x,y,z,ate.items.get(i));
 				item.hoverStart = 0;
 				Random random = new Random();
 				random.setSeed(item.getEntityItem().hashCode());

@@ -61,8 +61,8 @@ public class containerDrainBlock extends Block implements ITileEntityProvider{
 	
 	@Override
 	public void onBlockHarvested(World world, BlockPos pos, IBlockState state, EntityPlayer player){
-		if (world.getTileEntity(pos) instanceof airInfuserEntity){
-			((airInfuserEntity)(world.getTileEntity(pos))).breakBlock(world, pos, state, player);
+		if (world.getTileEntity(pos) instanceof containerDrainEntity){
+			((containerDrainEntity)(world.getTileEntity(pos))).breakBlock(world, pos, state, player);
 		}
 	}
 	

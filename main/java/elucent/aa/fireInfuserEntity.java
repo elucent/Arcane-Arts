@@ -192,5 +192,6 @@ public class fireInfuserEntity extends TileEntity implements ITickable {
 				}
 			}
 		}
+		this.markDirty();
 	}
 }

@@ -34,6 +34,7 @@ public class beamPistol extends Item implements itemElementContainer {
 	public void onUpdate(ItemStack stack, World world, Entity player, int slot, boolean isSelected){
 		if (!stack.hasTagCompound()){
 			stack.setTagCompound(new NBTTagCompound());
+			stack.getTagCompound().setDouble("cooldown", 0);
 			stack.getTagCompound().setDouble("fire", 0);
 			stack.getTagCompound().setDouble("earth", 0);
 			stack.getTagCompound().setDouble("water", 0);
@@ -46,6 +47,11 @@ public class beamPistol extends Item implements itemElementContainer {
 			stack.getTagCompound().setDouble("airCapacity", 128);
 			stack.getTagCompound().setDouble("lightCapacity", 128);
 			stack.getTagCompound().setDouble("voidCapacity", 128);
+		}
+		else {
+			if (stack.getTagCompound().getDouble("cooldown") > 0){
+				stack.getTagCompound().setDouble("cooldown",stack.getTagCompound().getDouble("cooldown")-1.0);
+			}
 		}
 	}
 	
@@ -76,8 +82,9 @@ public class beamPistol extends Item implements itemElementContainer {
 		super.onItemRightClick(stack, world, player);
 		if (!player.isSneaking()){
 			if (stack.hasTagCompound()){
-				if (getElement(stack) != null){
+				if (getElement(stack) != null && stack.getTagCompound().getDouble("cooldown") <= 0){
 					if (getElementValue(stack,getElement(stack).name) >= 0.1){
+						stack.getTagCompound().setDouble("cooldown", 35);
 						world.spawnEntityInWorld(new aaElementRay(world).init(player.posX,player.posY+1.4,player.posZ,player.getLookVec().xCoord,player.getLookVec().yCoord,player.getLookVec().zCoord,this.getElement(stack),6.0));
 						setElementValue(stack,getElement(stack).name,getElementValue(stack,getElement(stack).name)-0.1);
 					}

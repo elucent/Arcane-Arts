@@ -23,7 +23,12 @@ import net.minecraft.world.World;
 
 public class reducerEntity extends TileEntity implements ITickable, tileElementContainer {
 	aaElementValue fireValue, earthValue, waterValue, airValue, lightValue, voidValue;
-	double fireCapacity, earthCapacity, waterCapacity, airCapacity, lightCapacity, voidCapacity = 2560;
+	public double fireCapacity = 2560;
+	public double earthCapacity = 2560;
+	public double waterCapacity = 2560;
+	public double airCapacity = 2560;
+	public double lightCapacity = 2560;
+	public double voidCapacity = 2560;
 	int ticker = 0;
 	boolean heated = false;
 	int burntime = 0;
@@ -309,6 +314,7 @@ public class reducerEntity extends TileEntity implements ITickable, tileElementC
 				burntime = 10;
 			}
 		}
+		this.markDirty();
 	}
 
 	public void breakBlock(World world, BlockPos pos, IBlockState state,EntityPlayer player) {

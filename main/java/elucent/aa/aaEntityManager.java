@@ -10,11 +10,13 @@ public class aaEntityManager {
 	public static void registerEntities(){
 		EntityRegistry.registerModEntity(aaElementProjectile.class, "projectile", 0, arcaneArts.instance, 128, 20, true);
 		EntityRegistry.registerModEntity(aaElementRay.class, "ray", 0, arcaneArts.instance, 128, 20, true);
+		EntityRegistry.registerModEntity(aaEnergyRay.class, "energyRay", 0, arcaneArts.instance, 128, 20, true);
 	}
 	
 	@SideOnly(Side.CLIENT)
 	public static void registerEntityRenderers(){
 		RenderingRegistry.registerEntityRenderingHandler(aaElementProjectile.class, new aaElementProjectileRenderer(Minecraft.getMinecraft().getRenderManager()));
 		RenderingRegistry.registerEntityRenderingHandler(aaElementRay.class, new aaElementProjectileRenderer(Minecraft.getMinecraft().getRenderManager()));
+		RenderingRegistry.registerEntityRenderingHandler(aaEnergyRay.class, new aaElementProjectileRenderer(Minecraft.getMinecraft().getRenderManager()));
 	}
 }

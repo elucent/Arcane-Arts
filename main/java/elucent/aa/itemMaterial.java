@@ -102,6 +102,12 @@ public class itemMaterial extends Item {
 		else if (stack.getMetadata() == 24){
 			return "item.reducedEphemera";
 		}
+		else if (stack.getMetadata() == 25){
+			return "item.dustIron";
+		}
+		else if (stack.getMetadata() == 26){
+			return "item.dustGold";
+		}
 		else {
 			return "null";
 		}
@@ -135,6 +141,8 @@ public class itemMaterial extends Item {
 		subItems.add(new ItemStack(item,1,22));
 		subItems.add(new ItemStack(item,1,23));
 		subItems.add(new ItemStack(item,1,24));
+		subItems.add(new ItemStack(item,1,25));
+		subItems.add(new ItemStack(item,1,26));
 	}
 	
 	public static int getCatalystLevel(ItemStack stack){
@@ -183,7 +191,9 @@ public class itemMaterial extends Item {
 				"arcanearts:matterFlesh",
 				"arcanearts:matterPlant",
 				"arcanearts:matterGel",
-				"arcanearts:reducedEphemera"
+				"arcanearts:reducedEphemera",
+				"arcanearts:dustIron",
+				"arcanearts:dustGold"
 		);
 		addTex("arcanearts:t1Compound",0);
 		addTex("arcanearts:t1Mixture",1);
@@ -210,5 +220,7 @@ public class itemMaterial extends Item {
 		addTex("arcanearts:matterPlant",22);
 		addTex("arcanearts:matterGel",23);
 		addTex("arcanearts:reducedEphemera",24);
+		addTex("arcanearts:dustIron",25);
+		addTex("arcanearts:dustGold",26);
 	}
 }

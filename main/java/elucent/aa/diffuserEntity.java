@@ -29,7 +29,12 @@ import net.minecraft.world.World;
 
 public class diffuserEntity extends TileEntity implements ITickable, tileElementContainer{
 	aaElementValue fireValue, earthValue, waterValue, airValue, lightValue, voidValue;
-	double fireCapacity, earthCapacity, waterCapacity, airCapacity, lightCapacity, voidCapacity = 2560;
+	public double fireCapacity = 2560;
+	public double earthCapacity = 2560;
+	public double waterCapacity = 2560;
+	public double airCapacity = 2560;
+	public double lightCapacity = 2560;
+	public double voidCapacity = 2560;
 	int ticker = 0;
 	Random random = new Random();
 	public diffuserEntity(){
@@ -377,6 +382,7 @@ public class diffuserEntity extends TileEntity implements ITickable, tileElement
 				}
 			}
 		}
+		this.markDirty();
 	}
 
 	@Override

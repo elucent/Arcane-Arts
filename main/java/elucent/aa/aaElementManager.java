@@ -31,11 +31,17 @@ public class aaElementManager {
 	static Random random = new Random();
 	
 	public static ArrayList<aaElementRecipe> recipes = new ArrayList<aaElementRecipe>();
+	public static ArrayList<aaOreElementRecipe> oreRecipes = new ArrayList<aaOreElementRecipe>();
 	public static ArrayList<aaSimpleInfusionRecipe> infusions = new ArrayList<aaSimpleInfusionRecipe>();
 	public static ArrayList<aaCrucibleRecipe> mixtures = new ArrayList<aaCrucibleRecipe>();
 	public static ArrayList<aaComplexInfusionRecipe> complexInfusions = new ArrayList<aaComplexInfusionRecipe>();
 	
 	public static aaElementRecipe getRecipeForItem(ItemStack stack){
+		for (int i = 0; i < oreRecipes.size(); i ++){
+			if (oreRecipes.get(i).doesMatch(stack)){
+				return oreRecipes.get(i);
+			}
+		}
 		for (int i = 0; i < recipes.size(); i ++){
 			if (recipes.get(i).item.getItem() == stack.getItem() && stack.getMetadata() == recipes.get(i).item.getMetadata()){
 				return recipes.get(i);
@@ -124,24 +130,41 @@ public class aaElementManager {
 		elementRaw = new aaElement("raw", new Vec3i(255,255,255));
 	}
 	
+	public static boolean intArrayCompare(int[] a1, int[] a2){
+		if (a1.length <= a2.length){
+			for (int i = 0; i < a1.length; i ++){
+				if (a1[i] == a2[i]){
+					return true;
+				}
+			}
+		}
+		else {
+			for (int i = 0; i < a2.length; i ++){
+				if (a1[i] == a2[i]){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+	
 	public static ArrayList<aaElementValue> getStackComposition(ItemStack stack){
 		ArrayList<aaElementValue> compos = new ArrayList<aaElementValue>();
+		aaElementRecipe recipe = null;
 		boolean doBreak = false;
-		for (int i = 0; i < recipes.size() && !doBreak; i ++){
-			if (recipes.get(i).item.getItem() == stack.getItem() && recipes.get(i).item.getMetadata() == stack.getMetadata()){
-				compos.add(recipes.get(i).evFire);
-				compos.add(recipes.get(i).evEarth);
-				compos.add(recipes.get(i).evWater);
-				compos.add(recipes.get(i).evAir);
-				compos.add(recipes.get(i).evLight);
-				compos.add(recipes.get(i).evVoid);
-				if (recipes.get(i).itemClass1 != null){
-					compos.add(recipes.get(i).itemClass1);
-				}
-				if (recipes.get(i).itemClass2 != null){
-					compos.add(recipes.get(i).itemClass2);
-				}
-				doBreak = true;
+		recipe = getRecipeForItem(stack);
+		if (recipe != null){
+			compos.add(recipe.evFire);
+			compos.add(recipe.evEarth);
+			compos.add(recipe.evWater);
+			compos.add(recipe.evAir);
+			compos.add(recipe.evLight);
+			compos.add(recipe.evVoid);
+			if (recipe.itemClass1 != null){
+				compos.add(recipe.itemClass1);
+			}
+			if (recipe.itemClass2 != null){
+				compos.add(recipe.itemClass2);
 			}
 		}
 		return compos;
@@ -153,20 +176,25 @@ public class aaElementManager {
 		recipes.add(recipe);
 	}
 	
+	public static void registerOreRecipe(String name, float fireValue, float earthValue, float waterValue, float airValue, float lightValue, float voidValue, aaElementValue class1, aaElementValue class2){
+		aaOreElementRecipe recipe = new aaOreElementRecipe(name,fireValue,earthValue,waterValue,airValue,lightValue,voidValue);
+		recipe.setClasses(class1, class2);
+		oreRecipes.add(recipe);
+	}
+	
 	public void initRecipes(){
-		registerRecipe(new ItemStack(Items.coal,1,0),2,0,0,0,0,2,new aaElementValue(this.itemReactant,1),null);
+		registerOreRecipe("coal",2,0,0,0,0,2,new aaElementValue(this.itemReactant,1),null);
 		registerRecipe(new ItemStack(Items.fire_charge,1,0),8,0,0,0,8,0,new aaElementValue(this.itemReactant,4),null);
-		registerRecipe(new ItemStack(Blocks.coal_block,1,0),18,0,0,0,0,18,new aaElementValue(this.itemReactant,9),null);
-		registerRecipe(new ItemStack(Items.coal,1,1),2,0,0,0,0,0,new aaElementValue(this.itemReactant,1),null);
-		registerRecipe(new ItemStack(Items.redstone,1,0),0,0,2,0,0,0,new aaElementValue(this.itemReactant,1),null);
-		registerRecipe(new ItemStack(Blocks.redstone_block,1,0),0,0,18,0,0,0,new aaElementValue(this.itemReactant,9),null);
-		registerRecipe(new ItemStack(Items.glowstone_dust,1,0),0,0,0,0,2,0,new aaElementValue(this.itemReactant,4),null);
-		registerRecipe(new ItemStack(Blocks.glowstone,1,0),0,0,0,0,8,0,new aaElementValue(this.itemReactant,16),null);
+		registerOreRecipe("blockCoal",18,0,0,0,0,18,new aaElementValue(this.itemReactant,9),null);
+		registerOreRecipe("dustRedstone",0,0,2,0,0,0,new aaElementValue(this.itemReactant,1),null);
+		registerOreRecipe("blockRedstone",0,0,18,0,0,0,new aaElementValue(this.itemReactant,9),null);
+		registerOreRecipe("dustGlowstone",0,0,0,0,2,0,new aaElementValue(this.itemReactant,4),null);
+		registerOreRecipe("glowstone",0,0,0,0,8,0,new aaElementValue(this.itemReactant,16),null);
 		registerRecipe(new ItemStack(Items.blaze_powder,1,0),4,0,0,0,4,0,new aaElementValue(this.itemReactant,16),null);
-		registerRecipe(new ItemStack(Items.gunpowder,1,0),4,0,0,0,0,0,new aaElementValue(this.itemReactant,8),null);
-		registerRecipe(new ItemStack(Items.sugar,1,0),0,0,0,2,0,0,new aaElementValue(this.itemReactant,1),null);
+		registerOreRecipe("gunpowder",4,0,0,0,0,0,new aaElementValue(this.itemReactant,8),null);
+		registerOreRecipe("dustSugar",0,0,0,2,0,0,new aaElementValue(this.itemReactant,1),null);
 		
-		registerRecipe(new ItemStack(Items.iron_ingot,1,0),0,0,0,0,0,2,new aaElementValue(this.itemMetal,1),null);
+		registerOreRecipe("ingotIron",0,0,0,0,0,2,new aaElementValue(this.itemMetal,1),null);
 		registerRecipe(new ItemStack(Items.cauldron,1,0),0,0,0,8,0,2,new aaElementValue(this.itemMetal,7),null);
 		registerRecipe(new ItemStack(Items.minecart,1,0),0,0,4,0,0,10,new aaElementValue(this.itemMetal,5),null);
 		registerRecipe(new ItemStack(Blocks.anvil,1,0),0,0,0,0,0,62,new aaElementValue(this.itemMetal,31),null);
@@ -175,10 +203,10 @@ public class aaElementManager {
 		registerRecipe(new ItemStack(Blocks.iron_door,1,0),0,0,0,0,0,12,new aaElementValue(this.itemMetal,6),null);
 		registerRecipe(new ItemStack(Blocks.iron_trapdoor,1,0),0,0,0,0,0,6,new aaElementValue(this.itemMetal,3),null);
 		registerRecipe(new ItemStack(Blocks.heavy_weighted_pressure_plate,1,0),0,0,0,0,0,4,new aaElementValue(this.itemMetal,2),null);
-		registerRecipe(new ItemStack(Blocks.iron_block,1,0),0,0,0,0,0,18,new aaElementValue(this.itemMetal,9),null);
+		registerOreRecipe("blockIron",0,0,0,0,0,18,new aaElementValue(this.itemMetal,9),null);
 		registerRecipe(new ItemStack(Blocks.light_weighted_pressure_plate,1,0),0,0,0,0,8,0,new aaElementValue(this.itemMetal,4),null);
-		registerRecipe(new ItemStack(Items.gold_ingot,1,0),0,0,0,0,4,0,new aaElementValue(this.itemMetal,2),null);
-		registerRecipe(new ItemStack(Blocks.gold_block,1,0),0,0,0,0,36,0,new aaElementValue(this.itemMetal,18),null);
+		registerOreRecipe("ingotGold",0,0,0,0,4,0,new aaElementValue(this.itemMetal,2),null);
+		registerOreRecipe("blockGold",0,0,0,0,36,0,new aaElementValue(this.itemMetal,18),null);
 		
 		registerRecipe(new ItemStack(Items.feather,1,0),0,0,0,8,0,0,new aaElementValue(this.itemDry,2),null);
 		registerRecipe(new ItemStack(Items.blaze_rod,1,0),8,0,0,0,8,0,new aaElementValue(this.itemDry,8),null);
@@ -353,10 +381,10 @@ public class aaElementManager {
 		registerRecipe(new ItemStack(Items.prismarine_crystals,1),0,0,0,0,4,0,new aaElementValue(this.itemStone,4),null);
 		registerRecipe(new ItemStack(Blocks.gravel,1,0),0,0,0,4,0,0,new aaElementValue(this.itemStone,1),null);
 		registerRecipe(new ItemStack(Blocks.dirt,1,0),2,2,0,0,0,0,new aaElementValue(this.itemStone,1),null);
-		registerRecipe(new ItemStack(Blocks.iron_ore,1,0),0,8,0,0,0,4,new aaElementValue(this.itemStone,8),new aaElementValue(this.itemMetal,4));
-		registerRecipe(new ItemStack(Blocks.gold_ore,1,0),0,8,0,0,4,0,new aaElementValue(this.itemStone,8),new aaElementValue(this.itemMetal,8));
-		registerRecipe(new ItemStack(Blocks.diamond_ore,1,0),8,32,0,0,0,0,new aaElementValue(this.itemStone,8),new aaElementValue(this.itemGem,4));
-		registerRecipe(new ItemStack(Blocks.emerald_ore,1,0),8,32,0,0,0,0,new aaElementValue(this.itemStone,8),new aaElementValue(this.itemGem,8));
+		registerRecipe(new ItemStack(Blocks.iron_ore,1,0),0,8,0,0,0,8,new aaElementValue(this.itemStone,8),new aaElementValue(this.itemMetal,4));
+		registerRecipe(new ItemStack(Blocks.gold_ore,1,0),0,8,0,0,8,0,new aaElementValue(this.itemStone,8),new aaElementValue(this.itemMetal,8));
+		registerRecipe(new ItemStack(Blocks.diamond_ore,1,0),32,40,0,0,0,0,new aaElementValue(this.itemStone,8),new aaElementValue(this.itemGem,4));
+		registerRecipe(new ItemStack(Blocks.emerald_ore,1,0),32,40,0,0,0,0,new aaElementValue(this.itemStone,8),new aaElementValue(this.itemGem,8));
 		registerRecipe(new ItemStack(Blocks.redstone_ore,1,0),0,8,32,0,0,0,new aaElementValue(this.itemStone,8),new aaElementValue(this.itemReactant,16));
 		registerRecipe(new ItemStack(Blocks.coal_ore,1,0),8,8,0,0,0,8,new aaElementValue(this.itemStone,8),new aaElementValue(this.itemReactant,4));
 		registerRecipe(new ItemStack(Blocks.lapis_ore,1,0),0,8,0,0,64,0,new aaElementValue(this.itemStone,40),null);
@@ -567,7 +595,7 @@ public class aaElementManager {
 		mixtures.add(new aaCrucibleRecipe(1, new ItemStack(aaItemManager.vial,1,0), vial.initVial(new ItemStack(aaItemManager.vial,1,1),0,GameData.getPotionRegistry().getNameForObject(Potion.weakness).toString(),1800,2)).addIngredient(new ItemStack(Items.redstone,1)).addIngredient(new ItemStack(Items.feather,1)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,16)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,16)));
 		mixtures.add(new aaCrucibleRecipe(1, new ItemStack(aaItemManager.vial,1,0), vial.initVial(new ItemStack(aaItemManager.vial,1,1),1,GameData.getPotionRegistry().getNameForObject(Potion.poison).toString(),1800,2)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,3)).addIngredient(new ItemStack(Items.spider_eye,1)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,22)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,22)));
 		mixtures.add(new aaCrucibleRecipe(1, new ItemStack(aaItemManager.vial,1,0), vial.initVial(new ItemStack(aaItemManager.vial,1,1),0,GameData.getPotionRegistry().getNameForObject(Potion.poison).toString(),1800,2)).addIngredient(new ItemStack(Items.redstone,1)).addIngredient(new ItemStack(Items.spider_eye,1)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,22)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,22)));
-		mixtures.add(new aaCrucibleRecipe(1, new ItemStack(aaItemManager.vial,1,0), vial.initVial(new ItemStack(aaItemManager.vial,1,1),1,GameData.getPotionRegistry().getNameForObject(Potion.digSpeed).toString(),1800,2)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,3)).addIngredient(new ItemStack(Items.dye,3)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,19)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,19)));
+		mixtures.add(new aaCrucibleRecipe(1, new ItemStack(aaItemManager.vial,1,0), vial.initVial(new ItemStack(aaItemManager.vial,1,1),1,GameData.getPotionRegistry().getNameForObject(Potion.digSpeed).toString(),1800,2)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,3)).addIngredient(new ItemStack(Items.dye,1,3)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,19)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,19)));
 		mixtures.add(new aaCrucibleRecipe(1, new ItemStack(aaItemManager.vial,1,0), vial.initVial(new ItemStack(aaItemManager.vial,1,1),0,GameData.getPotionRegistry().getNameForObject(Potion.digSpeed).toString(),1800,2)).addIngredient(new ItemStack(Items.redstone,1)).addIngredient(new ItemStack(Items.dye,1,3)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,19)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,19)));
 		mixtures.add(new aaCrucibleRecipe(1, new ItemStack(aaItemManager.vial,1,0), vial.initVial(new ItemStack(aaItemManager.vial,1,1),1,GameData.getPotionRegistry().getNameForObject(Potion.digSlowdown).toString(),1800,2)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,3)).addIngredient(new ItemStack(Items.bone,1)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,20)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,20)));
 		mixtures.add(new aaCrucibleRecipe(1, new ItemStack(aaItemManager.vial,1,0), vial.initVial(new ItemStack(aaItemManager.vial,1,1),0,GameData.getPotionRegistry().getNameForObject(Potion.digSlowdown).toString(),1800,2)).addIngredient(new ItemStack(Items.redstone,1)).addIngredient(new ItemStack(Items.bone,1)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,20)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,20)));
@@ -675,7 +703,6 @@ public class aaElementManager {
 		complexInfusions.add(new aaComplexInfusionRecipe("scarletStoneInfusion", 64, 0, 0, 0, 16, 0, 0.5f, new ItemStack(aaItemManager.scarletStone,1)).addIngredient(new ItemStack(aaItemManager.compoundMatter,1)).addIngredient(new ItemStack(Blocks.redstone_block,1)).addIngredient(new ItemStack(Blocks.redstone_block,1)).addIngredient(new ItemStack(Blocks.redstone_block,1)).addIngredient(new ItemStack(Blocks.glass,1)));
 		complexInfusions.add(new aaComplexInfusionRecipe("laevateinnInfusion", 144, 0, 0, 0, 0, 72, 0.5f, new ItemStack(aaItemManager.laevateinn,1)).addIngredient(new ItemStack(aaItemManager.compoundMatter,1)).addIngredient(new ItemStack(Items.golden_sword,1)).addIngredient(new ItemStack(Items.blaze_rod,1)).addIngredient(new ItemStack(Items.blaze_rod,1,13)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,9)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,9)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,14)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,14)).addIngredient(new ItemStack(aaItemManager.ichor,1)));
 		complexInfusions.add(new aaComplexInfusionRecipe("regenerativeMetalInfusion", 0, 20, 20, 0, 0, 0, 0.5f, new ItemStack(aaItemManager.regenerativeMetal,1)).addIngredient(new ItemStack(aaItemManager.compoundMatter,1)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,11)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,10)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,18)).addIngredient(new ItemStack(aaItemManager.itemMaterial,1,18)).addIngredient(new ItemStack(Items.nether_wart,1)).addIngredient(new ItemStack(Items.nether_wart,1)));
-		
 	}
 	
 	public static ItemStack matterItemFromString(String s, int count){

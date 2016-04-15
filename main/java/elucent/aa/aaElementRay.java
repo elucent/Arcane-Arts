@@ -9,6 +9,7 @@ import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer.EnumStatus;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.AxisAlignedBB;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.Vec3;
 import net.minecraft.world.World;
@@ -63,8 +64,8 @@ public class aaElementRay extends Entity {
 					didStrike = true;
 				}
 			}
-			
-			if (this.isEntityInsideOpaqueBlock()){
+
+			if (this.getEntityWorld().getBlockState(new BlockPos(Math.floor(posX+velX),Math.floor(posY+velY),Math.floor(posZ+velZ))).getBlock().isOpaqueCube()){
 				didStrike = true;
 			}
 			
